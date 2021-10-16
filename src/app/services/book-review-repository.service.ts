@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { environment } from 'src/environments/environment';
 import { BookReview } from './book-review';
 
 @Injectable({
@@ -10,7 +11,7 @@ export class BookReviewRepositoryService {
   private reviews: BookReview[] = [];
 
   private loadReviews(): void {
-    this.httpClient.get<BookReview[]>('https://codingtutorialsbookreviewapi.azurewebsites.net/BookReview')
+    this.httpClient.get<BookReview[]>(`${environment.booksUri}/BookReview`)
       .subscribe (result => this.reviews = result);
   }
 
@@ -23,7 +24,7 @@ export class BookReviewRepositoryService {
   }
 
   addReview (review: BookReview): void{
-    this.httpClient.post<any>('https://codingtutorialsbookreviewapi.azurewebsites.net/BookReview', review)
+    this.httpClient.post<any>(`${environment.booksUri}/BookReview`, review)
       .subscribe(result => this.loadReviews());
   }
 }
